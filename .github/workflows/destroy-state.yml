@@ -1,0 +1,87 @@
+name: Terraform Destroy state
+ 
+on:
+  workflow_dispatch: 
+
+jobs:
+  destroy-state:
+    name: Destroy only state
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Configure AWS Credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.TERRAFORMUSER_AWS_ACCESSKEY }}
+          aws-secret-access-key: ${{ secrets.TERRAFORMUSER_AWS_SECRET_ACCESSKEY}}
+          aws-region: us-east-1
+
+      # Step 3: Set up Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.6
+
+      # Step 5: Destroy Bootstrap Resources
+      - name: Destroy Bootstrap Resources
+        run: |
+          # Initialize Terraform for bootstrap
+          terraform init
+
+          # Import remote resources
+          terraform import aws_s3_bucket.state_bucket mytf-state-app-bucket
+          terraform import aws_dynamodb_table.terraform_lock_table terraform-lock-table
+
+          # Remove bucket state
+          terraform state rm aws_s3_bucket.state_bucket
+        working-directory: terraform/bootstrap
+
+      # # Step 6: Destroy AWS S3 bucket via AWS CLi
+      # - name: Destroy AWS S3 bucket via AWS CLi
+      #   run: |
+      #     aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1
+      #     aws s3api delete-objects --bucket mytf-state-app-bucket --region us-east-1 --delete "$(aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1 --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+      #     aws s3api delete-objects --bucket mytf-state-app-bucket --region us-east-1 --delete "$(aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1 --query='{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}')"
+      #     aws s3 ls s3://mytf-state-app-bucket --region us-east-1
+      #     aws s3api delete-bucket --bucket mytf-state-app-bucket --region us-east-1
+      #   working-directory: terraform/bootstrap
+
+      # Step 6: Destroy AWS S3 bucket via AWS CLI
+      - name: Destroy AWS S3 bucket via AWS CLI
+        run: |
+          # List and delete all object versions
+          object_versions=$(aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1 --query 'Versions[].{Key:Key,VersionId:VersionId}' --output json)
+          if [ "$object_versions" != "[]" ]; then
+            echo "$object_versions" > objects.json
+            aws s3api delete-objects --bucket mytf-state-app-bucket --region us-east-1 --delete file://objects.json
+          else
+            echo "No object versions found to delete."
+          fi
+
+          # List and delete all delete markers
+          delete_markers=$(aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1 --query 'DeleteMarkers[].{Key:Key,VersionId:VersionId}' --output json)
+          if [ "$delete_markers" != "[]" ]; then
+            echo "$delete_markers" > delete_markers.json
+            aws s3api delete-objects --bucket mytf-state-app-bucket --region us-east-1 --delete file://delete_markers.json
+          else
+            echo "No delete markers found to delete."
+          fi
+
+          # Verify bucket is empty
+          aws s3 ls s3://mytf-state-app-bucket --region us-east-1 || echo "Bucket is empty"
+
+          # Delete the bucket
+          aws s3api delete-bucket --bucket mytf-state-app-bucket --region us-east-1
+
+
+      # Step 7: Destroy resource
+      - name: Destroy resource
+        run: |
+          terraform plan
+          terraform apply -destroy -auto-approve
+        working-directory: terraform/bootstrap
