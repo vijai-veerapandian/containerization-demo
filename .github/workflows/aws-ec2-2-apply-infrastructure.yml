@@ -35,6 +35,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+
       # Step 5: Terraform Plan
       - name: Terraform Plan
         run: terraform plan
