@@ -36,33 +36,19 @@ jobs:
       - name: Destroy Infrastructure
         run: |
           # Initialize Terraform for infrastructure
-          # terraform init
-          # terraform plan
-          # terraform apply -destroy -auto-approve
+           terraform init
+           terraform plan
+           terraform apply -destroy -auto-approve
         working-directory: terraform/aws-ec2/infrastructure
 
-      # Step 6: Destroy Bootstrap Resources
-      - name: Destroy Bootstrap Resources
-        run: |
-          # Initialize Terraform for bootstrap
-          # terraform init
-
-          # Import remote resources
-          # terraform import aws_s3_bucket.state_bucket mytf-state-app-bucket
-          # terraform import aws_dynamodb_table.terraform_lock_table terraform-lock-table
-
-          # Remove bucket state
-          # terraform state rm aws_s3_bucket.state_bucket
-        working-directory: terraform/aws-ec2/bootstrap
-
-      # Step 7: Destroy AWS S3 bucket via AWS CLi
+      # Step 7: Destroy Terraform Bootstrap AWS S3 bucket via AWS CLi
       - name: Destroy AWS S3 bucket via AWS CLi
         run: |
           echo "Attempting to force remove S3 bucket: mytf-state-app-bucket"
           aws s3 rb s3://mytf-state-app-bucket --region us-east-1 --force || echo "S3 bucket mytf-state-app-bucket not found or already deleted."
         working-directory: terraform/aws-ec2/bootstrap
 
-      # Step 8: Destroy DynamoDB Lock Table via AWS CLI
+      # Step 8: Destroy Terraform Bootstrap DynamoDB Lock Table via AWS CLI
       - name: Destroy DynamoDB Lock Table via AWS CLI
         run: |
           echo "Deleting DynamoDB table: terraform-lock-table"
