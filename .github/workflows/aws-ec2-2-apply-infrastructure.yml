@@ -31,19 +31,19 @@ jobs:
         with:
           terraform_version: 1.4.6
 
-      # Step 5: AWS EC2 instance key pair
+      # Step 4: AWS EC2 instance key pair
       - name: ec2 instance key empty file
         run: touch ec2awskey.pem
 
-      # Step 4: Initialize Terraform
+      # Step 5: Initialize Terraform
       - name: Terraform Init
         run: terraform init
 
-      # Step 5: Terraform Plan
+      # Step 6: Terraform Plan
       - name: Terraform Plan
         run: terraform plan
 
-      # Step 6: Terraform Apply (only on push to main)
+      # Step 7: Terraform Apply (only on push to main)
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
