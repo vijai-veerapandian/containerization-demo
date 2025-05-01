@@ -1,16 +1,16 @@
-name: Bootstrap Terraform backend
+name: Terraform Apply
 
 on:
-  workflow_dispatch:
-
+    workflow_dispatch: 
+        
 jobs:
-  bootstrap:
-    name: Bootstrap Terraform Backend
+  apply:
+    name: Provision Infrastructure with Terraform
     runs-on: ubuntu-latest
 
-    defaults:
+    defaults: 
       run:
-        working-directory: terraform/bootstrap
+        working-directory: terraform/aws-ec2/infrastructure
 
     steps:
       # Step 1: Checkout the repository
@@ -31,14 +31,15 @@ jobs:
         with:
           terraform_version: 1.4.6
 
-      # Step 4: Initialize Terraform (without backend)
+      # Step 4: Initialize Terraform
       - name: Terraform Init
-        run: terraform init -backend=false
+        run: terraform init
 
       # Step 5: Terraform Plan
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan
 
-      # Step 6: Terraform Apply
+      # Step 6: Terraform Apply (only on push to main)
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
