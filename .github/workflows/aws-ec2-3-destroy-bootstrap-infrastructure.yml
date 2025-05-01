@@ -45,7 +45,7 @@ jobs:
       - name: Destroy Bootstrap Resources
         run: |
           # Initialize Terraform for bootstrap
-          terraform init
+          # terraform init
 
           # Import remote resources
           # terraform import aws_s3_bucket.state_bucket mytf-state-app-bucket
