@@ -36,7 +36,7 @@ jobs:
         run: |
           # Initialize Terraform for infrastructure
           terraform init
-          terraform plan
+          # terraform plan
           terraform apply -destroy -auto-approve
         working-directory: terraform/aws-ec2/infrastructure
 
