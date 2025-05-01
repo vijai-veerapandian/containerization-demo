@@ -58,36 +58,12 @@ jobs:
       # Step 7: Destroy AWS S3 bucket via AWS CLi
       - name: Destroy AWS S3 bucket via AWS CLi
         run: |
-          # List and delete all object versions
-          object_versions=$(aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1 --query 'Versions[].{Key:Key,VersionId:VersionId}' --output json)
-          if [ "$object_versions" != "null" ] && [ "$object_versions" != "[]" ]; then
-            echo "{\"Objects\": $object_versions, \"Quiet\": false}" > objects_to_delete.json
-            echo "Deleting object versions..."
-            cat objects_to_delete.json
-            aws s3api delete-objects --bucket mytf-state-app-bucket --region us-east-1 --delete file://objects_to_delete.json
-          else
-            echo "No object versions found to delete."
-          fi
-
-          # List and delete all delete markers
-          delete_markers=$(aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1 --query 'DeleteMarkers[].{Key:Key,VersionId:VersionId}' --output json)
-          if [ "$delete_markers" != "null" ] && [ "$delete_markers" != "[]" ]; then
-            echo "{\"Objects\": $delete_markers, \"Quiet\": false}" > markers_to_delete.json
-            echo "Deleting delete markers..."
-            cat markers_to_delete.json
-            aws s3api delete-objects --bucket mytf-state-app-bucket --region us-east-1 --delete file://markers_to_delete.json
-          else
-            echo "No delete markers found to delete."
-          fi
-
-          # Verify bucket is empty and delete it
-          aws s3 ls s3://mytf-state-app-bucket --region us-east-1
-          aws s3api delete-bucket --bucket mytf-state-app-bucket --region us-east-1
+          echo "Attempting to force remove S3 bucket: mytf-state-app-bucket"
+          aws s3 rb s3://mytf-state-app-bucket --region us-east-1 --force || echo "S3 bucket mytf-state-app-bucket not found or already deleted."
         working-directory: terraform/aws-ec2/bootstrap
 
-      # Step 8: Destroy resource
-      - name: Destroy resource
+      # Step 8: Destroy DynamoDB Lock Table via AWS CLI
+      - name: Destroy DynamoDB Lock Table via AWS CLI
         run: |
-          terraform plan
-          terraform apply -destroy -auto-approve
-        working-directory: terraform/aws-ec2/bootstrap
+          echo "Deleting DynamoDB table: terraform-lock-table"
+          aws dynamodb delete-table --table-name terraform-lock-table --region us-east-1 || echo "DynamoDB table terraform-lock-table not found or already deleted."
