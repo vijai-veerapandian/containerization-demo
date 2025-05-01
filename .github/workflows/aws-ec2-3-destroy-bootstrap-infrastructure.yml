@@ -27,7 +27,12 @@ jobs:
         with:
           terraform_version: 1.4.6
 
-      # Step 4: Destroy Infrastructure
+      # Step 4: AWS EC2 instance key pair
+      - name: ec2 instance key empty file
+        run: touch ec2awskey.pem
+
+
+      # Step 5: Destroy Infrastructure
       - name: Destroy Infrastructure
         run: |
           # Initialize Terraform for infrastructure
@@ -36,7 +41,7 @@ jobs:
           terraform apply -destroy -auto-approve
         working-directory: terraform/aws-ec2/infrastructure
 
-      # Step 5: Destroy Bootstrap Resources
+      # Step 6: Destroy Bootstrap Resources
       - name: Destroy Bootstrap Resources
         run: |
           # Initialize Terraform for bootstrap
@@ -50,7 +55,7 @@ jobs:
           terraform state rm aws_s3_bucket.state_bucket
         working-directory: terraform/aws-ec2/bootstrap
 
-      # Step 6: Destroy AWS S3 bucket via AWS CLi
+      # Step 7: Destroy AWS S3 bucket via AWS CLi
       - name: Destroy AWS S3 bucket via AWS CLi
         run: |
           aws s3api list-object-versions --bucket mytf-state-app-bucket --region us-east-1
@@ -60,7 +65,7 @@ jobs:
           aws s3api delete-bucket --bucket mytf-state-app-bucket --region us-east-1
         working-directory: terraform/aws-ec2/bootstrap
 
-      # Step 7: Destroy resource
+      # Step 8: Destroy resource
       - name: Destroy resource
         run: |
           terraform plan
