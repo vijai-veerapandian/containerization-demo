@@ -31,7 +31,6 @@ jobs:
       - name: ec2 instance key empty file
         run: touch ec2awskey.pem
 
-
       # Step 5: Destroy Infrastructure
       - name: Destroy Infrastructure
         run: |
