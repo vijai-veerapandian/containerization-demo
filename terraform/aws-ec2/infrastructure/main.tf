@@ -212,7 +212,7 @@ resource "null_resource" "set_key_permission" {
   }
 
   provisioner "local-exec" {
-    command = "touch ec2awskey.pem && chmod 600 ec2awskey.pem"
+    command = "chmod 600 ec2awskey.pem"
   }
   depends_on = [local_file.private_key_pem]
 }

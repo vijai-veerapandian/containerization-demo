@@ -31,10 +31,13 @@ jobs:
         with:
           terraform_version: 1.4.6
 
+      # Step 5: AWS EC2 instance key pair
+      - name: ec2 instance key empty file
+        run: touch ec2awskey.pem
+
       # Step 4: Initialize Terraform
       - name: Terraform Init
         run: terraform init
-
 
       # Step 5: Terraform Plan
       - name: Terraform Plan
