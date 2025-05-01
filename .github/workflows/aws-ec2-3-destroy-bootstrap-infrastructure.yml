@@ -52,7 +52,7 @@ jobs:
           # terraform import aws_dynamodb_table.terraform_lock_table terraform-lock-table
 
           # Remove bucket state
-          terraform state rm aws_s3_bucket.state_bucket
+          # terraform state rm aws_s3_bucket.state_bucket
         working-directory: terraform/aws-ec2/bootstrap
 
       # Step 7: Destroy AWS S3 bucket via AWS CLi
