@@ -1,4 +1,4 @@
-name: 3 Terraform Destroy bootstrap and insfrastructure
+name: 3 Terraform Destroy bootstrap+insfrastructure
 
 on:
   workflow_dispatch: 
