@@ -1,4 +1,4 @@
-name: Terraform Apply
+name: 2 Apply Terraform infrastructure
 
 on:
     workflow_dispatch: 

@@ -1,4 +1,4 @@
-name: Bootstrap Terraform backend
+name: 1 Apply Terraform Bootstrap
 
 on:
   workflow_dispatch:

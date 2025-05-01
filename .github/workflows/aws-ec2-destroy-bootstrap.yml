@@ -1,4 +1,4 @@
-name: Terraform Destroy state
+name: Terraform Destroy state only 
  
 on:
   workflow_dispatch: 
