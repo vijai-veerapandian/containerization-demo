@@ -30,6 +30,7 @@ jobs:
       # Step 4: AWS EC2 instance key pair
       - name: ec2 instance key empty file
         run: touch ec2awskey.pem
+        working-directory: terraform/aws-ec2/infrastructure
 
       # Step 5: Destroy Infrastructure
       - name: Destroy Infrastructure
