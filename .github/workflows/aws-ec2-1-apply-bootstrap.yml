@@ -10,7 +10,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/bootstrap/aws-ec2
+        working-directory: terraform/aws-ec2/bootstrap
 
     steps:
       # Step 1: Checkout the repository
