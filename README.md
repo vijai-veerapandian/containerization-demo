@@ -1,7 +1,7 @@
 
 ## MyWeather App
 
-MyWeather App is a containerized microservice application featuring a React frontend, a backend openweather, Google Gemini Weather API for city weather summerzinig as part of my personal project both for fun and to demonstrate Devops and microservice application development skill and this Respository demonstrates how to set up the application locally and on AWS Cloud ( Not multi-cloud/ Kubernetes yet) using Docker Compose and showcases a CI/CD pipeline for automated building, testing, and integration.
+MyWeather App is a containerized microservice application featuring a React frontend, a backend openweather, Google Gemini Weather API for city weather summerzinig as part of my personal project both for fun and to demonstrate Devops and microservice application development skill and this Respository demonstrates how to set up the application locally and on AWS Cloud ( Not multi-cloud/ Kubernetes yet) using Docker Compose and showcases a CI/CD pipeline( using Github actions) for automated building, testing, and integration.
 
 ## Initial Monolithic Application Architecture
 
