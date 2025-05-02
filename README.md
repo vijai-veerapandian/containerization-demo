@@ -58,7 +58,7 @@ I have used Github actions to initially do the CI-CD pipeline work along with Te
 The React frontend is served on port 3000. It uses environment variables to configure the API URLs and headers.
 
 ## Sample Application weather Search
-![weather Screenshot1](./assets/Cityweather-search.png)
+![weather Screenshot1](./assets/Cityweather-search1.png)
 
 ![weather Screenshot2](./assets/Cityweather-search2.png)
 
