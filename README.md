@@ -121,6 +121,27 @@ This repository includes a demonstration CI/CD pipeline (e.g., using GitHub Acti
 
 Refer to the pipeline configuration file (e.g., `.github/workflows/ci.yml`) in the repository for the exact implementation details.
 
+## Challenges and Lessons Learnt
+
+This project, while rewarding, presented several challenges and learning opportunities:
+
+*   **Backend API Integration:**
+    *   Integrating multiple external APIs (OpenWeather, Gemini) required careful handling of different response structures, potential rate limits, and error conditions.
+    *   Transforming and combining data from these sources into a consistent format for the frontend needed thoughtful design in the backend service.
+    *   Debugging issues related to API keys, request formats, or unexpected API responses was sometimes time-consuming.
+*   **Automating Terraform State:**
+    *   Setting up the S3 bucket and DynamoDB table for Terraform's remote state backend *before* running the main `terraform init` and `plan/apply` presented a classic "chicken-and-egg" problem within a fully automated pipeline.
+    *   Solutions explored included:
+        *   Manual pre-creation of the state resources (less ideal for full automation).
+        *   Using a separate, simpler Terraform configuration or script (e.g., AWS CLI commands within the pipeline) specifically to bootstrap the state backend resources before running the main infrastructure deployment.
+    *   Ensuring the state backend was configured correctly early in the pipeline was crucial for reliable infrastructure management.
+*   **Microservice Complexity:** Converting from a monolithic structure introduced complexities in inter-service communication (though minimal in this specific setup), environment variable management across services, and debugging across container boundaries.
+*   **CI/CD Pipeline Design:** Defining the stages (lint, test, build, deploy), managing secrets securely (like API keys and AWS credentials in GitHub Actions), and ensuring smooth handoffs between steps required careful planning and iteration.
+*   **Infrastructure as Code (IaC):** While Terraform significantly simplifies infrastructure management, writing robust and reusable modules, managing dependencies, and handling infrastructure drift requires ongoing learning and discipline.
+*   **Monitoring Setup:** Configuring Prometheus scraping and Grafana dashboards, especially getting the right PromQL queries and Loki setup for logs, involved a learning curve but proved invaluable for observing the application's behavior.
+
+Overall, the journey highlighted the power of automation (CI/CD, IaC) but also the attention to detail required to make these systems work reliably. It reinforced the importance of monitoring and the iterative nature of building and refining both applications and their deployment processes.
+
 ---
 
 ### Environment File Security
