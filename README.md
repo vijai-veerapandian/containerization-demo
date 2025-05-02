@@ -21,7 +21,7 @@ Later after continous learning, patience and effort. I have converted thiis mono
 features like  
 Google Gemini Weather Summerizer within 25 words based on the city which is searched on the Frontend application usings its API from GCP Google Cloud and next 24 hours weather Chart Graph.
 
-![Final Architecture Screemshot](./assets/Updated-microservice-architecturewith-Infra-automation.jpg)
+![Final Architecture Screemshot](./assets/Updated-microservice-architecturewith-Infra-automation
 
 ## Prerequisites
 
