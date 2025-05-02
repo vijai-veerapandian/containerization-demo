@@ -80,7 +80,7 @@ Grafana is used for visualizing metrics collected by Prometheus. It is accessibl
 - **Prometheus Data Source**:
   - URL: `http://prometheus:9090`
   - URL: `http://loki:3100`
-  - I have created and already imported the json file for view prometheus and Loki based dashboard on Grafana to monitoring the container metrics and errors via Grafana dashboard.
+  - I have created and already imported the json file as part of container build process so once the grafana container start both the prometheus and Loki based dashboard are available to monitor metrics and look out for all sort of errors.
 
   Prometheus datasource based dashboard
   ![Final Architecture Screemshot](./assets/Grafana-complete-containers-dashboard.jpg)
