@@ -258,7 +258,7 @@ resource "null_resource" "docker_setup" {
   "sudo docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions",
   "sudo docker plugin ls",
   "sleep 5",
-  "git clone --branch testv4 https://github.com/vijai-veerapandian/myweather-app.git /home/ubuntu/app || true",
+  "git clone --branch main https://github.com/vijai-veerapandian/myweather-app.git /home/ubuntu/app || true",
   "cd /home/ubuntu/app && sudo docker-compose up -d"
     ]
   }
