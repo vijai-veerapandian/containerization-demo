@@ -48,6 +48,8 @@ WEATHER_API_KEY=<your key>
 
 I have used Github actions to initially do the CI-CD pipeline work along with Terraform integration to seemlessly deploy the required Infrastructure on the AWS Cloud starting with initializing Terraform script and creating Terraform state services on AWS S3 and DynamoDB to secure its state file and then create the Infrastructure and then deploy the application code from the Github respository and install docker-compose and build/start the microservice container application using docker-compose.
 
+![Docker-compose status Screemshot](./assets/docker-compose-status.jpg)
+
 ## Services
 
 ### React Frontend
@@ -55,9 +57,9 @@ I have used Github actions to initially do the CI-CD pipeline work along with Te
 The React frontend is served on port 3000. It uses environment variables to configure the API URLs and headers.
 
 ## Sample Application weather Search
-![weather Screenshot1](./assets/Cityweather-search1.png)
+![weather Screenshot1](./assets/1.jpg)
 
-![weather Screenshot2](./assets/Cityweather-search2.png)
+![weather Screenshot2](./assets/2.jpg)
 
 ### Backend Server
 
@@ -83,29 +85,10 @@ Grafana is used for visualizing metrics collected by Prometheus. It is accessibl
   - I have created and already imported the json file as part of container build process so once the grafana container start both the prometheus and Loki based dashboard are available to monitor metrics and look out for all sort of errors.
 
   Prometheus datasource based dashboard
-  ![Final Architecture Screemshot](./assets/Grafana-complete-containers-dashboard.jpg)
+  ![Final Architecture Screemshot](./assets/grafana-dashboard-1.jpg)
 
   Loki datasource based dashboard
-  ![Final Architecture Screemshot](./assets/Logs-monitoring.jpg)
-
-## Example PromQL Queries
-
-Here are some example PromQL queries you can use in Grafana to visualize metrics:
-
-- **Total HTTP Requests**:
-  ```promql
-  sum(rate(http_request_count[1m]))
-  ```
-
-- **Average Request Duration**:
-  ```promql
-  rate(http_request_duration_ms_sum[1m]) / rate(http_request_duration_ms_count[1m])
-  ```
-
-- **95th Percentile Request Duration**:
-  ```promql
-  histogram_quantile(0.95, sum(rate(http_request_duration_ms_bucket[1m])) by (le))
-  ```
+  ![Final Architecture Screemshot](./assets/grafana-dashboard-2.jpg)
 
 ## Additional Information
 
