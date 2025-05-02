@@ -48,7 +48,7 @@ WEATHER_API_KEY=<your key>
 
 I have used Github actions to initially do the CI-CD pipeline work along with Terraform integration to seemlessly deploy the required Infrastructure on the AWS Cloud starting with initializing Terraform script and creating Terraform state services on AWS S3 and DynamoDB to secure its state file and then create the Infrastructure and then deploy the application code from the Github respository and install docker-compose and build/start the microservice container application using docker-compose.
 
-![Docker-compose status Screemshot](./assets/docker-compose-status.jpg)
+![Sample Docker-compose status Screemshot runned without Github actions](./assets/docker-compose-status.jpg)
 
 ## Services
 
