@@ -123,7 +123,7 @@ Refer to the pipeline configuration file (e.g., `.github/workflows/ci.yml`) in t
 
 ## Challenges and Lessons Learnt
 
-This project, while rewarding, presented several challenges and learning opportunities:
+Here are the few challenges and best practices I implemented through this project journey.
 
 *   **Backend API Integration:**
     *   Integrating multiple external APIs (OpenWeather, Gemini) required careful handling of different response structures, potential rate limits, and error conditions.
