@@ -1,4 +1,4 @@
-# Terraform AWS EC2 and Terraform state file in S3 Setup
+## Terraform AWS EC2 and Terraform state file in S3 Setup
 
 I have created this Terraform to provision AWS infrastructure, including an EC2 instance and an S3 bucket for storing the Terraform state file.
 
