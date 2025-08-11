@@ -1,8 +1,7 @@
+#### Note: Application containerization from monolithic to microservice and then implementing terraform and Github actions to demonstrate GitOps deployment process.
 
-## Application containerization from monolithic to microservice and then implementing terraform and Github actions to demonstrate GitOps deployment process.
-
-
-#### MyWeather App
+-----------------
+## MyWeather App
 
 MyWeather App is a containerized microservice application featuring a React frontend, a backend openweather, Google Gemini Weather API for city weather summerzinig as part of my personal project both for fun and to demonstrate Devops and microservice application development skill and this Respository demonstrates how to set up the application locally and on AWS Cloud ( not multi-cloud/ Kubernetes yet) using Docker Compose and showcases a CI/CD pipeline( using Github actions) for automated building, testing, and integration.
 
